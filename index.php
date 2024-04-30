@@ -1,18 +1,19 @@
 <?php
 
-define('ROOT', __DIR__);
-require_once(ROOT . '/utils/NewsManager.php');
-require_once(ROOT . '/utils/CommentManager.php');
+/**
+ * Main entry point for displaying news articles and their associated comments.
+ *
+ * This script creates an instance of the NewsViewer class and displays news articles
+ * along with their corresponding comments.
+ */
 
-foreach (NewsManager::getInstance()->listNews() as $news) {
-	echo("############ NEWS " . $news->getTitle() . " ############\n");
-	echo($news->getBody() . "\n");
-	foreach (CommentManager::getInstance()->listComments() as $comment) {
-		if ($comment->getNewsId() == $news->getId()) {
-			echo("Comment " . $comment->getId() . " : " . $comment->getBody() . "\n");
-		}
-	}
-}
+// Include autoloader to automatically load class files
+require_once 'autoloader.php';
 
-$commentManager = CommentManager::getInstance();
-$c = $commentManager->listComments();
+use App\Viewer\NewsViewer;
+
+// Create an instance of NewsViewer
+$newsViewer = new NewsViewer();
+
+// Display news articles and their comments
+$newsViewer->displayNewsWithComments();
